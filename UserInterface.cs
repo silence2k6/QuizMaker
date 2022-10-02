@@ -19,9 +19,33 @@ namespace QuizMaker
 
             return createOrPlay;
         }
-        //public static List<string> CreateQuestions()
-        //{
 
-        //}
+        public static string AskForQuestion()
+        {
+            Console.WriteLine("Pls give me any question:");
+            string question = Console.ReadLine();
+            return question;
+        }
+
+        public static string AskForRightAnswer()
+        {
+            Console.WriteLine("Pls put in the right answer");
+            string rightAnswer = Console.ReadLine();
+            return rightAnswer;
+        }
+
+        public static string AskForWrongAnswer()
+        {
+            Console.WriteLine("Pls put in a wrong answer");
+            string wrongAnswer = Console.ReadLine();
+            return wrongAnswer;
+        }
+
+        public static string AskForAnotherWrongAnswer()
+        {
+            Console.WriteLine("Pls put in another wrong answer");
+            string anotherWrongAnswer = Console.ReadLine();
+            return anotherWrongAnswer;
+        }
     }
 }
