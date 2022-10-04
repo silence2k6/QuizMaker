@@ -7,56 +7,40 @@ using System.Threading.Tasks;
 namespace QuizMaker
 {
     internal class DataInterface
-    {
-        public class Question
+    {       
+        public static List<ObjectClass.Quizcard> CreateQuestion(List<ObjectClass.Quizcard> QuizcardRepository)
         {
-            public string userQuestion;
-            public string rigthAnswer;
-            public string wrongAnswer;
-            public string anotherWrongAnswer;
+            ObjectClass.Quizcard quizcard = new ObjectClass.Quizcard();
 
+            quizcard.question = UserInterface.AskForQuestion();
+            
+            quizcard.rigthAnswer = UserInterface.AskForRightAnswer();
+            
+            quizcard.wrongAnswer = UserInterface.AskForWrongAnswer();
+
+            quizcard.anotherWrongAnswer = UserInterface.AskForAnotherWrongAnswer();
+
+            QuizcardRepository.Add(quizcard);
+
+            return QuizcardRepository;
         }
 
-        public static List<string> CreateQuestion(List<string> QuestionRepository)
+        public static ObjectClass.Quizcard[] CreateGame(List<ObjectClass.Quizcard> QuizcardRepository)
         {
-            Question question = new Question();
+            ObjectClass.Quizcard[] gameQuestions = new ObjectClass.Quizcard[2];
+            int createGameQuestionsCounter = 0;
 
-            question.userQuestion = UserInterface.AskForQuestion();
-            QuestionRepository.Add(question.userQuestion);
-
-            question.rigthAnswer = UserInterface.AskForRightAnswer();
-            QuestionRepository.Add(question.rigthAnswer);
-
-            question.wrongAnswer = UserInterface.AskForWrongAnswer();
-            QuestionRepository.Add(question.wrongAnswer);
-
-            question.anotherWrongAnswer = UserInterface.AskForAnotherWrongAnswer();
-            QuestionRepository.Add(question.anotherWrongAnswer);
-
-            return QuestionRepository;
-        }
-
-        public static string CreateGameQuestions(List<string> QuestionRepository)
-        {
-            string[] gameQuestions = new string[10];
-            int x = 0; ;
-
-            while (x < 10)
+            while (createGameQuestionsCounter < 2)
             {
                 Random randomQuestion = new Random();
-                int repositoryQuestionIndex = randomQuestion.Next(QuestionRepository.Count);
+                int repositoryQuestionIndex = randomQuestion.Next(QuizcardRepository.Count);
+                gameQuestions[createGameQuestionsCounter] = QuizcardRepository[repositoryQuestionIndex];
 
-                if (repositoryQuestionIndex % 4 == 0 || repositoryQuestionIndex == 0)
-                {
-                    gameQuestions[x] = Convert.ToString(repositoryQuestionIndex);
-                    x++;
-                }
-                else
-                {
-                    continue;
-                }
+                //if one question object goes into the gameQuestion Array, set a marker on it, so it cant be choosen again by the random method
+                
+                createGameQuestionsCounter++;
             }
-            return Convert.ToString(gameQuestions);
+            return gameQuestions;
         }
 
     }
