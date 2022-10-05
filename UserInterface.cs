@@ -14,15 +14,26 @@ namespace QuizMaker
         }
         public static int CreateOrPlayMessage()
         {
-            Console.Write("If you want to play press(1), if you want to create new questions press(2)\t");
-            int createOrPlay = Convert.ToInt32(Console.ReadLine());
+            int createOrPlay = 0;
+            bool validInput = false;
 
+            while (validInput == false)
+            {
+                Console.Write("If you want to play press(1), if you want to create new questions press(2)\t");
+                validInput = int.TryParse(Console.ReadLine(), out createOrPlay);
+
+                if (createOrPlay <= 0 || createOrPlay > 2)
+                {
+                    Console.WriteLine("You can only play the game(1) or create a new question(2)");
+                    validInput = false;
+                }
+            }
             return createOrPlay;
         }
 
         public static string AskForQuestion()
         {
-            Console.WriteLine("Pls give me any question:");
+            Console.WriteLine("Pls give me any question");
             string question = Console.ReadLine();
             return question;
         }
@@ -39,13 +50,6 @@ namespace QuizMaker
             Console.WriteLine("Pls put in a wrong answer");
             string wrongAnswer = Console.ReadLine();
             return wrongAnswer;
-        }
-
-        public static string AskForAnotherWrongAnswer()
-        {
-            Console.WriteLine("Pls put in another wrong answer");
-            string anotherWrongAnswer = Console.ReadLine();
-            return anotherWrongAnswer;
         }
 
         public static bool CreateOneMoreQuizcard()
@@ -67,7 +71,28 @@ namespace QuizMaker
         {
             int x = 0;
 
-            Console.WriteLine($"{gameQuestions[x]}");
+            ObjectClass.Quizcard onlyQuestion = gameQuestions[x];
+
+            Console.WriteLine(onlyQuestion.question);
+
+            int maxAnswers = gameQuestions.Length - 1;
+            string[] answerRotation = new string[maxAnswers];
+
+            answerRotation[0] = onlyQuestion.rigthAnswer;
+
+            while (maxAnswers >= 0)
+            {
+                answerRotation[maxAnswers] = onlyQuestion.wrongAnswer;
+                maxAnswers--;
+            }
+
+            for (int i = 0; i < answerRotation.Length; i++)
+            {
+                Random rotation = new Random();
+                int rotationIndex = rotation.Next();
+                answerRotation[i] = Convert.ToString(rotationIndex);
+                Console.WriteLine(answerRotation[i]);
+            }
             x++;
         }
 

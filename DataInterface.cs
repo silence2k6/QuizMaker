@@ -8,29 +8,38 @@ namespace QuizMaker
 {
     internal class DataInterface
     {       
-        public static List<ObjectClass.Quizcard> CreateQuestion(List<ObjectClass.Quizcard> QuizcardRepository)
+        public static List<ObjectClass.Quizcard> CreateQuestion(List<ObjectClass.Quizcard> QuizCardRepository)
         {
-            ObjectClass.Quizcard quizcard = new ObjectClass.Quizcard();
+            ObjectClass.Quizcard newQuizCard = new ObjectClass.Quizcard();
 
-            quizcard.question = UserInterface.AskForQuestion();
-            
-            quizcard.rigthAnswer = UserInterface.AskForRightAnswer();
-            
-            quizcard.wrongAnswer = UserInterface.AskForWrongAnswer();
+            newQuizCard.question = UserInterface.AskForQuestion();
 
-            quizcard.anotherWrongAnswer = UserInterface.AskForAnotherWrongAnswer();
+            newQuizCard.quizCards.Add(newQuizCard);
 
-            QuizcardRepository.Add(quizcard);
+            newQuizCard.rigthAnswer = UserInterface.AskForRightAnswer();
 
-            return QuizcardRepository;
+            newQuizCard.quizCards.Add(newQuizCard);
+
+            int maxWrongAnswers = 2;
+
+            while (maxWrongAnswers <= 2)
+            {
+                newQuizCard.wrongAnswer = UserInterface.AskForWrongAnswer();
+                newQuizCard.quizCards.Add(newQuizCard);
+                maxWrongAnswers++;
+            }
+       
+            QuizCardRepository.Add(newQuizCard);
+
+            return QuizCardRepository;
         }
 
         public static ObjectClass.Quizcard[] CreateGame(List<ObjectClass.Quizcard> QuizcardRepository)
         {
-            ObjectClass.Quizcard[] gameQuestions = new ObjectClass.Quizcard[2];
+            ObjectClass.Quizcard[] gameQuestions = new ObjectClass.Quizcard[5];
             int createGameQuestionsCounter = 0;
 
-            while (createGameQuestionsCounter < 2)
+            while (createGameQuestionsCounter < 5)
             {
                 Random randomQuestion = new Random();
                 int repositoryQuestionIndex = randomQuestion.Next(QuizcardRepository.Count);
