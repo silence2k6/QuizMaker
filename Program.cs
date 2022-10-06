@@ -16,7 +16,9 @@
 
                 while (createQuizcards == true)
                 {
+                    quizcardRepository = BackUp.GetRepositoryBackup(quizcardRepository);
                     DataInterface.CreateQuestion(quizcardRepository);
+                    BackUp.CreateRepositoryBackup(quizcardRepository);
                     createQuizcards = UserInterface.CreateOneMoreQuizcard();
                 }
             }

@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuizMaker
+﻿namespace QuizMaker
 {
     internal class DataInterface
-    {       
+    {
         public static List<QuizCard> CreateQuestion(List<QuizCard> QuizCardRepository)
         {
             QuizCard newQuizCard = new QuizCard();
-            
+
             newQuizCard.question = UserInterface.AskForQuestion();
 
             newQuizCard.rigthAnswer = UserInterface.AskForRightAnswer();
             newQuizCard.wrongAnswers.Add(newQuizCard.rigthAnswer);
 
             int maxWrongAnswers = 2;
-          
+
             while (maxWrongAnswers >= 0)
             {
                 newQuizCard.wrongAnswers.Add(UserInterface.AskForWrongAnswer());
                 maxWrongAnswers--;
             }
-       
+
             QuizCardRepository.Add(newQuizCard);
 
             return QuizCardRepository;
@@ -42,12 +36,10 @@ namespace QuizMaker
                 gameQuestions[createGameQuestionsCounter] = QuizcardRepository[repositoryQuestionIndex];
 
                 //if one question object goes into the gameQuestion Array, set a marker on it, so it cant be choosen again by the random method
-                
+
                 createGameQuestionsCounter++;
             }
             return gameQuestions;
         }
-
     }
-
 }
