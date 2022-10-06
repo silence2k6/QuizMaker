@@ -67,31 +67,22 @@ namespace QuizMaker
             return createOneMoreQuiscard;            
         }
 
-        public static void ShowGameQuestion (ObjectClass.Quizcard[] gameQuestions)
+        public static void ShowGameQuestion (QuizCard[] gameQuestions)
         {
             int x = 0;
 
-            ObjectClass.Quizcard onlyQuestion = gameQuestions[x];
+            QuizCard onlyQuestion = gameQuestions[x];
 
             Console.WriteLine(onlyQuestion.question);
 
-            int maxAnswers = gameQuestions.Length - 1;
-            string[] answerRotation = new string[maxAnswers];
+            Random answerRotation = new Random();
 
-            answerRotation[0] = onlyQuestion.rigthAnswer;
-
-            while (maxAnswers >= 0)
+            for (int i = 0; i < onlyQuestion.wrongAnswers.Count; i++)
             {
-                answerRotation[maxAnswers] = onlyQuestion.wrongAnswer;
-                maxAnswers--;
-            }
-
-            for (int i = 0; i < answerRotation.Length; i++)
-            {
-                Random rotation = new Random();
-                int rotationIndex = rotation.Next();
-                answerRotation[i] = Convert.ToString(rotationIndex);
-                Console.WriteLine(answerRotation[i]);
+                int j = answerRotation.Next(i, onlyQuestion.wrongAnswers.Count);
+                onlyQuestion.wrongAnswer = onlyQuestion.wrongAnswers[i];
+                onlyQuestion.wrongAnswers[i] = onlyQuestion.wrongAnswers[j];
+                onlyQuestion.wrongAnswers[j] = onlyQuestion.wrongAnswer;
             }
             x++;
         }

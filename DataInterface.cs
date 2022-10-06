@@ -8,25 +8,21 @@ namespace QuizMaker
 {
     internal class DataInterface
     {       
-        public static List<ObjectClass.Quizcard> CreateQuestion(List<ObjectClass.Quizcard> QuizCardRepository)
+        public static List<QuizCard> CreateQuestion(List<QuizCard> QuizCardRepository)
         {
-            ObjectClass.Quizcard newQuizCard = new ObjectClass.Quizcard();
-
+            QuizCard newQuizCard = new QuizCard();
+            
             newQuizCard.question = UserInterface.AskForQuestion();
 
-            newQuizCard.quizCards.Add(newQuizCard);
-
             newQuizCard.rigthAnswer = UserInterface.AskForRightAnswer();
-
-            newQuizCard.quizCards.Add(newQuizCard);
+            newQuizCard.wrongAnswers.Add(newQuizCard.rigthAnswer);
 
             int maxWrongAnswers = 2;
-
-            while (maxWrongAnswers <= 2)
+          
+            while (maxWrongAnswers >= 0)
             {
-                newQuizCard.wrongAnswer = UserInterface.AskForWrongAnswer();
-                newQuizCard.quizCards.Add(newQuizCard);
-                maxWrongAnswers++;
+                newQuizCard.wrongAnswers.Add(UserInterface.AskForWrongAnswer());
+                maxWrongAnswers--;
             }
        
             QuizCardRepository.Add(newQuizCard);
@@ -34,9 +30,9 @@ namespace QuizMaker
             return QuizCardRepository;
         }
 
-        public static ObjectClass.Quizcard[] CreateGame(List<ObjectClass.Quizcard> QuizcardRepository)
+        public static QuizCard[] CreateGame(List<QuizCard> QuizcardRepository)
         {
-            ObjectClass.Quizcard[] gameQuestions = new ObjectClass.Quizcard[5];
+            QuizCard[] gameQuestions = new QuizCard[5];
             int createGameQuestionsCounter = 0;
 
             while (createGameQuestionsCounter < 5)

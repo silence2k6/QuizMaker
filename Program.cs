@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            List<ObjectClass.Quizcard> quizcardRepository = new List<ObjectClass.Quizcard>();
+            List<QuizCard> quizcardRepository = new List<QuizCard>();
             
             UserInterface.GameIntroMessage();
 
@@ -21,7 +21,7 @@
                 }
             }
 
-            ObjectClass.Quizcard [] gameQuestions = DataInterface.CreateGame(quizcardRepository);
+            QuizCard [] gameQuestions = DataInterface.CreateGame(quizcardRepository);
 
             int x = 0;
 
