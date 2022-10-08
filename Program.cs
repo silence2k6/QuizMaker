@@ -3,7 +3,9 @@
 namespace QuizMaker
 {
     internal class Program
-    {       
+    {
+        const int MAX_GAME_QUESTIONS = 5;
+        const int MAX_WRONG_QUESTION_ANSWERS = 3;
         static void Main(string[] args)
         {
             XmlSerializer writer = new XmlSerializer(typeof(List<QuizCard>));
@@ -24,7 +26,7 @@ namespace QuizMaker
                 while (createQuizcards == true)
                 {
                     quizcardRepository = BackUp.GetRepositoryBackup(quizcardRepository, reader, path);
-                    DataInterface.CreateQuestion(quizcardRepository);
+                    DataInterface.CreateQuestion(quizcardRepository, MAX_WRONG_QUESTION_ANSWERS);
                     createQuizcards = UserInterface.CreateOneMoreQuizcard();
                     BackUp.CreateRepositoryBackup(quizcardRepository, writer, path);
                 }
@@ -36,12 +38,12 @@ namespace QuizMaker
                 UserInterface.GameStartMessage();
 
                 quizcardRepository = BackUp.GetRepositoryBackup(quizcardRepository, reader, path);
-                List<QuizCard> gameQuestions = DataInterface.CreateGame(quizcardRepository);
+                List<QuizCard> gameQuestions = DataInterface.CreateGame(quizcardRepository, MAX_GAME_QUESTIONS);
             
                 while (gameQuestions.Count > 0)
                 {
                     int rightAnswer = UserInterface.ShowGameQuestion(gameQuestions[0]);
-                    int userAnswer = UserInterface.ShowQuestionAnswers(gameQuestions[0]);
+                    int userAnswer = UserInterface.ShowQuestionAnswers(gameQuestions[0], MAX_WRONG_QUESTION_ANSWERS);
 
                     if (rightAnswer == userAnswer)
                     {
@@ -50,7 +52,7 @@ namespace QuizMaker
 
                     gameQuestions.RemoveAt(0);
                 }
-                UserInterface.resultMessage(rightAnswerCounter);
+                UserInterface.resultMessage(rightAnswerCounter, MAX_GAME_QUESTIONS);
             }
         }
     }

@@ -94,28 +94,28 @@
             return rightAnswerPos;
         }
 
-        public static int ShowQuestionAnswers(QuizCard gameQuestion)
+        public static int ShowQuestionAnswers(QuizCard gameQuestion, int MAX_WRONG_QUESTION_ANSWERS)
         { 
             int userAnswer = 0;
             bool validInput = false;
 
             while (validInput == false)
             {
-                Console.WriteLine("Choose (1), (2), (3) or (4) for your answer:\t");
+                Console.WriteLine("Choose your answer:\t");
                 validInput = int.TryParse(Console.ReadLine(), out userAnswer);
 
-                if (userAnswer <= 0 || userAnswer > 4)
+                if (userAnswer <= 0 || userAnswer > MAX_WRONG_QUESTION_ANSWERS)
                 {
-                    Console.WriteLine("Only answers between 1-4 are aviable!!!");
+                    Console.WriteLine($"Only answers between 1-{MAX_WRONG_QUESTION_ANSWERS} are aviable!!!");
                     validInput = false;
                 }
             }
             return userAnswer;
         }
 
-        public static void resultMessage (int rightAnswerCounter)
+        public static void resultMessage (int rightAnswerCounter, int MAX_GAME_QUESTIONS)
         {
-            Console.WriteLine($"\nCratulation, you have answered {rightAnswerCounter}/10 questions correctly");
+            Console.WriteLine($"\nCratulation, you have answered {rightAnswerCounter}/{MAX_GAME_QUESTIONS} questions correctly");
         }
     }
 }
