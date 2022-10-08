@@ -35,16 +35,12 @@ namespace QuizMaker
                 UserInterface.GameStartMessage();
 
                 quizcardRepository = BackUp.GetRepositoryBackup(quizcardRepository, reader, path);
-                QuizCard[] gameQuestions = DataInterface.CreateGame(quizcardRepository);
-
-                int x = 0;
-
-                while (x <= gameQuestions.Length)
+                List<QuizCard> gameQuestions = DataInterface.CreateGame(quizcardRepository);
+            
+                while (gameQuestions.Count >= 0)
                 {
-                    UserInterface.ShowGameQuestion(gameQuestions);
-
-                    UserInterface.AskForAnswer();
-                    x++;
+                    UserInterface.ShowGameQuestion(gameQuestions[0]);
+                    gameQuestions.RemoveAt(0);
                 }
             }
         }

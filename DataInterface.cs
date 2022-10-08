@@ -24,20 +24,20 @@
             return QuizCardRepository;
         }
 
-        public static QuizCard[] CreateGame(List<QuizCard> QuizcardRepository)
+        public static List<QuizCard> CreateGame(List<QuizCard> QuizcardRepository)
         {
-            QuizCard[] gameQuestions = new QuizCard[5];
-            int createGameQuestionsCounter = 0;
+            List<QuizCard> listOfPossibleQuestions = QuizcardRepository;
+            List<QuizCard> gameQuestions = new List<QuizCard>();
+            int numberOfGameQuestions = 0;
 
-            while (createGameQuestionsCounter < 5)
+            while (numberOfGameQuestions < 5)
             {
                 Random randomQuestion = new Random();
-                int repositoryQuestionIndex = randomQuestion.Next(QuizcardRepository.Count);
-                gameQuestions[createGameQuestionsCounter] = QuizcardRepository[repositoryQuestionIndex];
+                int repositoryQuestionIndex = randomQuestion.Next(listOfPossibleQuestions.Count);
+                gameQuestions.Add(listOfPossibleQuestions[repositoryQuestionIndex]);
+                listOfPossibleQuestions.RemoveAt(repositoryQuestionIndex);
 
-                //if one question object goes into the gameQuestion Array, set a marker on it, so it cant be choosen again by the random method
-
-                createGameQuestionsCounter++;
+                numberOfGameQuestions++;
             }
             return gameQuestions;
         }

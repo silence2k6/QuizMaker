@@ -66,16 +66,12 @@
             return createOneMoreQuiscard;            
         }
 
-        public static void ShowGameQuestion (QuizCard[] gameQuestions)
-        {
-            int x = 0;
-
-            QuizCard onlyQuestion = gameQuestions[x];
-
-            Console.WriteLine(onlyQuestion.question);
+        public static int ShowGameQuestion (QuizCard gameQuestion)
+        {           
+            Console.WriteLine(gameQuestion.question);
 
             Random answerRotation = new Random();
-            List<string> allAnswers = onlyQuestion.allAnswers;
+            List<string> allAnswers = gameQuestion.allAnswers;
             int pos = 1;
 
             while (allAnswers.Count > 0)
@@ -85,11 +81,7 @@
                 allAnswers.RemoveAt(answerPosition);
                 pos++;
             }
-            x++;
-        }
 
-        public static int AskForAnswer()
-        {
             int userAnswer = 0;
             bool validInput = false;
 
@@ -98,7 +90,7 @@
                 Console.WriteLine("Choose (1), (2), (3) or (4) for your answer:\t");
                 validInput = int.TryParse(Console.ReadLine(), out userAnswer);
 
-                if (userAnswer <= 0 || userAnswer > 3)
+                if (userAnswer <= 0 || userAnswer > 4)
                 {
                     Console.WriteLine("Only answers between 1-4 are aviable!!!");
                     validInput = false;
