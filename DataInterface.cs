@@ -9,13 +9,13 @@
             newQuizCard.question = UserInterface.AskForQuestion();
 
             newQuizCard.rigthAnswer = UserInterface.AskForRightAnswer();
-            newQuizCard.wrongAnswers.Add(newQuizCard.rigthAnswer);
+            newQuizCard.allAnswers.Add(newQuizCard.rigthAnswer);
 
             int maxWrongAnswers = 2;
 
             while (maxWrongAnswers >= 0)
             {
-                newQuizCard.wrongAnswers.Add(UserInterface.AskForWrongAnswer());
+                newQuizCard.allAnswers.Add(UserInterface.AskForWrongAnswer());
                 maxWrongAnswers--;
             }
 

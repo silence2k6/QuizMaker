@@ -6,6 +6,11 @@
         {
             Console.WriteLine("Welcome to QuizMaker");
         }
+
+        public static void GameStartMessage()
+        {
+            Console.WriteLine("\n****** Ok, lets start the game ******\n");
+        }
         public static int CreateOrPlayMessage()
         {
             int createOrPlay = 0;
@@ -70,13 +75,15 @@
             Console.WriteLine(onlyQuestion.question);
 
             Random answerRotation = new Random();
+            List<string> allAnswers = onlyQuestion.allAnswers;
+            int pos = 1;
 
-            for (int i = 0; i < onlyQuestion.wrongAnswers.Count; i++)
+            while (allAnswers.Count > 0)
             {
-                int j = answerRotation.Next(i, onlyQuestion.wrongAnswers.Count);
-                onlyQuestion.wrongAnswer = onlyQuestion.wrongAnswers[i];
-                onlyQuestion.wrongAnswers[i] = onlyQuestion.wrongAnswers[j];
-                onlyQuestion.wrongAnswers[j] = onlyQuestion.wrongAnswer;
+                int answerPosition = answerRotation.Next(allAnswers.Count);
+                Console.WriteLine($"{pos}) {allAnswers[answerPosition]}");
+                allAnswers.RemoveAt(answerPosition);
+                pos++;
             }
             x++;
         }
@@ -88,12 +95,12 @@
 
             while (validInput == false)
             {
-                Console.WriteLine("Choose (1), (2) or (3) for your answer:\t");
+                Console.WriteLine("Choose (1), (2), (3) or (4) for your answer:\t");
                 validInput = int.TryParse(Console.ReadLine(), out userAnswer);
 
                 if (userAnswer <= 0 || userAnswer > 3)
                 {
-                    Console.WriteLine("Only answers between 1-3 are aviable!!!");
+                    Console.WriteLine("Only answers between 1-4 are aviable!!!");
                     validInput = false;
                 }
             }
