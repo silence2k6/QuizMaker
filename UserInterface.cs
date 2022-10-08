@@ -54,7 +54,7 @@
         public static bool CreateOneMoreQuizcard()
         {
             bool createOneMoreQuiscard = true;
-            
+
             Console.WriteLine("If you want to create one more question press 'Y':\t");
 
             string userInput = Console.ReadLine().ToUpper();
@@ -63,25 +63,39 @@
             {
                 createOneMoreQuiscard = false;
             }
-            return createOneMoreQuiscard;            
+            return createOneMoreQuiscard;
         }
 
-        public static int ShowGameQuestion (QuizCard gameQuestion)
-        {           
-            Console.WriteLine(gameQuestion.question);
+        public static int ShowGameQuestion(QuizCard gameQuestion)
+        {
+            Console.WriteLine($"\n{gameQuestion.question}");
 
             Random answerRotation = new Random();
             List<string> allAnswers = gameQuestion.allAnswers;
-            int pos = 1;
+
+            int displayPos = 1;
+            int rightAnswerPos = 0;
+
 
             while (allAnswers.Count > 0)
             {
-                int answerPosition = answerRotation.Next(allAnswers.Count);
-                Console.WriteLine($"{pos}) {allAnswers[answerPosition]}");
-                allAnswers.RemoveAt(answerPosition);
-                pos++;
-            }
+                string rightAnswer = gameQuestion.rigthAnswer;
 
+                int answerPosition = answerRotation.Next(allAnswers.Count);
+                Console.WriteLine($"{displayPos}) {allAnswers[answerPosition]}");
+
+                if (rightAnswer == allAnswers[answerPosition])
+                {
+                    rightAnswerPos = displayPos;
+                }
+                allAnswers.RemoveAt(answerPosition);
+                displayPos++;
+            }
+            return rightAnswerPos;
+        }
+
+        public static int ShowQuestionAnswers(QuizCard gameQuestion)
+        { 
             int userAnswer = 0;
             bool validInput = false;
 
@@ -97,6 +111,11 @@
                 }
             }
             return userAnswer;
+        }
+
+        public static void resultMessage (int rightAnswerCounter)
+        {
+            Console.WriteLine($"\nCratulation, you have answered {rightAnswerCounter}/10 questions correctly");
         }
     }
 }

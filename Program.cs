@@ -11,6 +11,7 @@ namespace QuizMaker
             var path = @"C:\Users\user\source\repos\QuizMaker\QuizCardRepository\QuizCardRepository.xml";
 
             List<QuizCard> quizcardRepository = new List<QuizCard>();
+            int rightAnswerCounter = 0;
 
             UserInterface.GameIntroMessage();
 
@@ -37,11 +38,19 @@ namespace QuizMaker
                 quizcardRepository = BackUp.GetRepositoryBackup(quizcardRepository, reader, path);
                 List<QuizCard> gameQuestions = DataInterface.CreateGame(quizcardRepository);
             
-                while (gameQuestions.Count >= 0)
+                while (gameQuestions.Count > 0)
                 {
-                    UserInterface.ShowGameQuestion(gameQuestions[0]);
+                    int rightAnswer = UserInterface.ShowGameQuestion(gameQuestions[0]);
+                    int userAnswer = UserInterface.ShowQuestionAnswers(gameQuestions[0]);
+
+                    if (rightAnswer == userAnswer)
+                    {
+                        rightAnswerCounter++;
+                    }
+
                     gameQuestions.RemoveAt(0);
                 }
+                UserInterface.resultMessage(rightAnswerCounter);
             }
         }
     }
