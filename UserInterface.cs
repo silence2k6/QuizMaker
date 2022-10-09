@@ -11,6 +11,10 @@
         {
             Console.WriteLine("\n****** Ok, lets start the game ******\n");
         }
+        /// <summary>
+        /// console option between playing the game or build new game questions
+        /// </summary>
+        /// <returns>user input</returns>
         public static int CreateOrPlayMessage()
         {
             int createOrPlay = 0;
@@ -50,7 +54,10 @@
             string wrongAnswer = Console.ReadLine();
             return wrongAnswer;
         }
-
+        /// <summary>
+        /// console option to create more game questions 
+        /// </summary>
+        /// <returns>true or false</returns>
         public static bool CreateOneMoreQuizcard()
         {
             bool createOneMoreQuiscard = true;
@@ -65,7 +72,11 @@
             }
             return createOneMoreQuiscard;
         }
-
+        /// <summary>
+        /// prints a game question on console
+        /// </summary>
+        /// <param name="gameQuestion">question object</param>
+        /// <returns>position of right answer</returns>
         public static int ShowGameQuestion(QuizCard gameQuestion)
         {
             Console.WriteLine($"\n{gameQuestion.question}");
@@ -93,7 +104,12 @@
             }
             return rightAnswerPos;
         }
-
+        /// <summary>
+        /// prints question answers on console in random order
+        /// </summary>
+        /// <param name="gameQuestion">question object</param>
+        /// <param name="MAX_WRONG_QUESTION_ANSWERS">number of max wrong answers for each question</param>
+        /// <returns>user input</returns>
         public static int ShowQuestionAnswers(QuizCard gameQuestion, int MAX_WRONG_QUESTION_ANSWERS)
         { 
             int userAnswer = 0;
@@ -104,9 +120,9 @@
                 Console.WriteLine("Choose your answer:\t");
                 validInput = int.TryParse(Console.ReadLine(), out userAnswer);
 
-                if (userAnswer <= 0 || userAnswer > MAX_WRONG_QUESTION_ANSWERS)
+                if (userAnswer <= 0 || userAnswer > (MAX_WRONG_QUESTION_ANSWERS+1))
                 {
-                    Console.WriteLine($"Only answers between 1-{MAX_WRONG_QUESTION_ANSWERS} are aviable!!!");
+                    Console.WriteLine($"Only answers between 1-{MAX_WRONG_QUESTION_ANSWERS+1} are aviable!!!");
                     validInput = false;
                 }
             }
