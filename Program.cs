@@ -41,11 +41,11 @@ namespace QuizMaker
      
                 List<QuizCard> listOfPossibleQuestions = quizcardRepository;
                 List<QuizCard> gameQuestions = new List<QuizCard>();
+                Random random = new Random();
 
                 while (gameQuestions.Count < MAX_GAME_QUESTIONS)
                 {
-                    Random randomQuestion = new Random();
-                    int repositoryQuestionIndex = randomQuestion.Next(listOfPossibleQuestions.Count);
+                    int repositoryQuestionIndex = random.Next(listOfPossibleQuestions.Count);
                     gameQuestions.Add(listOfPossibleQuestions[repositoryQuestionIndex]);
                     listOfPossibleQuestions.RemoveAt(repositoryQuestionIndex);
                 }
