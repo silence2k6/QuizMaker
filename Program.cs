@@ -38,8 +38,18 @@ namespace QuizMaker
                 UserInterface.GameStartMessage();
 
                 quizcardRepository = BackUp.GetRepositoryBackup(quizcardRepository, reader, path);
-                List<QuizCard> gameQuestions = DataInterface.CreateGame(quizcardRepository, MAX_GAME_QUESTIONS);
-            
+     
+                List<QuizCard> listOfPossibleQuestions = quizcardRepository;
+                List<QuizCard> gameQuestions = new List<QuizCard>();
+
+                while (gameQuestions.Count < MAX_GAME_QUESTIONS)
+                {
+                    Random randomQuestion = new Random();
+                    int repositoryQuestionIndex = randomQuestion.Next(listOfPossibleQuestions.Count);
+                    gameQuestions.Add(listOfPossibleQuestions[repositoryQuestionIndex]);
+                    listOfPossibleQuestions.RemoveAt(repositoryQuestionIndex);
+                }
+
                 while (gameQuestions.Count > 0)
                 {
                     int rightAnswer = UserInterface.ShowGameQuestion(gameQuestions[0]);
