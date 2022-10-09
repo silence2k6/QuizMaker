@@ -39,18 +39,20 @@
         {
             List<QuizCard> listOfPossibleQuestions = QuizcardRepository;
             List<QuizCard> gameQuestions = new List<QuizCard>();
-            int numberOfGameQuestions = 0;
-
-            while (numberOfGameQuestions < MAX_GAME_QUESTIONS)
+          
+            while (gameQuestions.Count < MAX_GAME_QUESTIONS)
             {
-                Random randomQuestion = new Random();
-                int repositoryQuestionIndex = randomQuestion.Next(listOfPossibleQuestions.Count);
+                int repositoryQuestionIndex = DataInterface.RandomGenerator(listOfPossibleQuestions);
                 gameQuestions.Add(listOfPossibleQuestions[repositoryQuestionIndex]);
                 listOfPossibleQuestions.RemoveAt(repositoryQuestionIndex);
-
-                numberOfGameQuestions++;
             }
             return gameQuestions;
+        }
+        public static int RandomGenerator (List<QuizCard> anyList)
+        {
+            Random random = new Random();
+            int index = random.Next(anyList.Count);
+            return index;
         }
     }
 }
